@@ -1,4 +1,4 @@
-package org.learning.kafka;
+package org.learning.kafka.producer;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -10,21 +10,18 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.IntStream;
 
-public class ProducerDemoWithCallback {
+public class ProducerDemoKeys {
 
-    private static final Logger log = LoggerFactory.getLogger(ProducerDemoWithCallback.class.getSimpleName());
+    private static final Logger log = LoggerFactory.getLogger(ProducerDemoKeys.class.getSimpleName());
+
+    private static final String TOPIC = "java_topic";
 
     public static void main(String[] args) {
         Properties properties = getProperties();
 
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
-            IntStream.range(1, 4)
-                    .forEach(iteration -> {
-                        IntStream.range(1, 10)
-                                .forEach(counter -> produceMessage(producer, iteration, counter));
-
-                        producer.flush();
-                    });
+            IntStream.range(1, 10)
+                    .forEach(counter -> produceMessage(producer, counter));
         }
     }
 
@@ -38,14 +35,15 @@ public class ProducerDemoWithCallback {
         return  properties;
     }
 
-    private static void produceMessage(KafkaProducer<String, String> producer, int iteration, int counter) {
+    private static void produceMessage(KafkaProducer<String, String> producer, int counter) {
+        String key = String.format("key_#%d", counter);
+
         ProducerRecord<String, String> producerRecord =
-                new ProducerRecord<>("java_topic", String.format("callback message #%d.%d", iteration, counter));
+                new ProducerRecord<>(TOPIC, key, String.format("key message #%d", counter));
 
         producer.send(producerRecord, (metadata, exception) -> {
             if (Objects.isNull(exception)) {
-                log.info(String.format("Received new metadata \nTopic: %s\nPartition: %d\nOffset: %d\nTimestamp: %d\n",
-                        metadata.topic(), metadata.partition(), metadata.offset(), metadata.timestamp()));
+                log.info(String.format("Key: %s | Partition: %d", key, metadata.partition()));
             } else {
                 log.error("Error while producing", exception);
             }
