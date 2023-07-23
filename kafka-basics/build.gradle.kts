@@ -6,10 +6,6 @@ plugins {
 group = "org.learning.kafka"
 version = "1.0-SNAPSHOT"
 
-ext {
-
-}
-
 repositories {
     mavenCentral()
 }
