@@ -2,7 +2,7 @@ package org.learning.kafka.producer;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.StringSerializer;
+import org.learning.kafka.KafkaProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ public class ProducerDemoWithCallback {
     private static final String TOPIC = "java_topic";
 
     public static void main(String[] args) {
-        Properties properties = getProperties();
+        Properties properties = KafkaProperties.PRODUCER.getProperties();
 
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
             IntStream.range(1, 4)
@@ -26,16 +26,6 @@ public class ProducerDemoWithCallback {
                                 .forEach(counter -> produceMessage(producer, iteration, counter));
                     });
         }
-    }
-
-    private static Properties getProperties() {
-        Properties properties = new Properties();
-
-        properties.setProperty("bootstrap.servers", "localhost:9092");
-        properties.setProperty("key.serializer", StringSerializer.class.getName());
-        properties.setProperty("value.serializer", StringSerializer.class.getName());
-
-        return  properties;
     }
 
     private static void produceMessage(KafkaProducer<String, String> producer, int iteration, int counter) {
