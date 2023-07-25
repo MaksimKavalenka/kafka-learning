@@ -1,5 +1,7 @@
 package org.learning.kafka.common;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
@@ -11,11 +13,11 @@ public enum KafkaProperties {
 
         @Override
         public void setProperties(Properties properties) {
-            properties.setProperty("key.deserializer", StringDeserializer.class.getName());
-            properties.setProperty("value.deserializer", StringDeserializer.class.getName());
+            properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+            properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
-            properties.setProperty("group.id", "java-topic-consumer-group");
-            properties.setProperty("auto.offset.reset", "earliest");
+            properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "java-topic-consumer-group");
+            properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         }
 
     },
@@ -24,8 +26,13 @@ public enum KafkaProperties {
 
         @Override
         public void setProperties(Properties properties) {
-            properties.setProperty("key.serializer", StringSerializer.class.getName());
-            properties.setProperty("value.serializer", StringSerializer.class.getName());
+            properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+            properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+            properties.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, Integer.toString(32 * 1024));
+            properties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
+
+            properties.setProperty(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
         }
 
     };

@@ -22,7 +22,7 @@ public class WikimediaChangesProducer {
         try (BackgroundEventSource eventSource = buildBackgroundEventSource(eventHandler)) {
             eventSource.start();
 
-            TimeUnit.MINUTES.sleep(1);
+            TimeUnit.SECONDS.sleep(10);
         }
     }
 
