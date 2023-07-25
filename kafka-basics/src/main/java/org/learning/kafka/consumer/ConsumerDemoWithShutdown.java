@@ -32,8 +32,8 @@ public class ConsumerDemoWithShutdown {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
 
                 for (ConsumerRecord<String, String> record : records) {
-                    log.info(String.format("Key: %s, Value: %s", record.key(), record.value()));
-                    log.info(String.format("Partition: %d, Offset: %d", record.partition(), record.offset()));
+                    log.info("Key: {}, Value: {}", record.key(), record.value());
+                    log.info("Partition: {}, Offset: {}", record.partition(), record.offset());
                 }
             }
         } catch (WakeupException e) {

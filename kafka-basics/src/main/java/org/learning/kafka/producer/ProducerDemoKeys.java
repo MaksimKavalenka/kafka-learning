@@ -33,7 +33,7 @@ public class ProducerDemoKeys {
 
         producer.send(producerRecord, (metadata, exception) -> {
             if (Objects.isNull(exception)) {
-                log.info(String.format("Key: %s | Partition: %d", key, metadata.partition()));
+                log.info("Key: {} | Partition: {}", key, metadata.partition());
             } else {
                 log.error("Error while producing", exception);
             }

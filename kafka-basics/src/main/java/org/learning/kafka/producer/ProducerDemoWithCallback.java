@@ -34,8 +34,8 @@ public class ProducerDemoWithCallback {
 
         producer.send(producerRecord, (metadata, exception) -> {
             if (Objects.isNull(exception)) {
-                log.info(String.format("Received new metadata \nTopic: %s\nPartition: %d\nOffset: %d\nTimestamp: %d\n",
-                        metadata.topic(), metadata.partition(), metadata.offset(), metadata.timestamp()));
+                log.info("Received new metadata \nTopic: {}\nPartition: {}\nOffset: {}\nTimestamp: {}\n",
+                        metadata.topic(), metadata.partition(), metadata.offset(), metadata.timestamp());
             } else {
                 log.error("Error while producing", exception);
             }
