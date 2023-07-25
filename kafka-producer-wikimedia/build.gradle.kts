@@ -11,12 +11,13 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":kafka-common"))
-
     implementation("org.apache.kafka:kafka-clients")
 
     implementation("org.slf4j:slf4j-api")
     implementation("org.slf4j:slf4j-simple")
+
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.launchdarkly:okhttp-eventsource")
 }
 
 dependencyManagement {
@@ -27,6 +28,9 @@ dependencyManagement {
             entry("slf4j-api")
             entry("slf4j-simple")
         }
+
+        dependency("com.squareup.okhttp3:okhttp:4.11.0")
+        dependency("com.launchdarkly:okhttp-eventsource:4.1.1")
     }
 }
 

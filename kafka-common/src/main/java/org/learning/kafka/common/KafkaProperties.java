@@ -1,4 +1,4 @@
-package org.learning.kafka;
+package org.learning.kafka.common;
 
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;

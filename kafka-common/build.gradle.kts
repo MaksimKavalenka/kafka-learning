@@ -11,22 +11,12 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":kafka-common"))
-
     implementation("org.apache.kafka:kafka-clients")
-
-    implementation("org.slf4j:slf4j-api")
-    implementation("org.slf4j:slf4j-simple")
 }
 
 dependencyManagement {
     dependencies {
         dependency("org.apache.kafka:kafka-clients:3.5.1")
-
-        dependencySet("org.slf4j:2.0.7") {
-            entry("slf4j-api")
-            entry("slf4j-simple")
-        }
     }
 }
 

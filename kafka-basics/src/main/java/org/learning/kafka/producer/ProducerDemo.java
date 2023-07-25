@@ -2,7 +2,7 @@ package org.learning.kafka.producer;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.learning.kafka.KafkaProperties;
+import org.learning.kafka.common.KafkaProperties;
 
 import java.util.Properties;
 
