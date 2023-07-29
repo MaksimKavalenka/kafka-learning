@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.util.Map;
 import java.util.Properties;
 
 public enum KafkaProperties {
@@ -49,6 +50,11 @@ public enum KafkaProperties {
     public abstract void setProperties(Properties properties);
 
     public Properties getProperties() {
+        return properties;
+    }
+
+    public Properties overrideProperties(Map<String, String> newProperties) {
+        newProperties.forEach(properties::setProperty);
         return properties;
     }
 
