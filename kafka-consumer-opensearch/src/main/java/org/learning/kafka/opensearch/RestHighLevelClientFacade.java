@@ -6,8 +6,9 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
+import org.opensearch.action.bulk.BulkRequest;
+import org.opensearch.action.bulk.BulkResponse;
 import org.opensearch.action.index.IndexRequest;
-import org.opensearch.action.index.IndexResponse;
 import org.opensearch.client.RequestOptions;
 import org.opensearch.client.RestClient;
 import org.opensearch.client.RestHighLevelClient;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.Objects;
 
 public final class RestHighLevelClientFacade {
@@ -61,13 +63,21 @@ public final class RestHighLevelClientFacade {
         return client.indices().exists(request, RequestOptions.DEFAULT);
     }
 
-    public static void request(RestHighLevelClient client, String index, String document) throws IOException {
-        IndexRequest request = new IndexRequest(index)
+    public static IndexRequest createRequest(String index, String id, String document) throws IOException {
+        return new IndexRequest(index)
+                .id(id)
                 .source(document, XContentType.JSON);
+    }
 
-        IndexResponse response = client.index(request, RequestOptions.DEFAULT);
+    public static void sendBulkRequest(RestHighLevelClient client, List<IndexRequest> requests) throws IOException {
+        if (!requests.isEmpty()) {
+            BulkRequest request = new BulkRequest();
+            request.add(requests.toArray(new IndexRequest[0]));
 
-        log.info("Document is indexed: {}", response.getId());
+            BulkResponse response = client.bulk(request, RequestOptions.DEFAULT);
+
+            log.info("Inserted {} document(s)", response.getItems().length);
+        }
     }
 
 }

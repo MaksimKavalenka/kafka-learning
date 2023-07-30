@@ -50,7 +50,7 @@ public class ConsumerDemoWithShutdown {
             log.info("Detected a shutdown");
             consumer.wakeup();
 
-            try {
+            try (consumer) {
                 mainThread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
