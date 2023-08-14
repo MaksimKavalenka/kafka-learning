@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":kafka-common"))
+    implementation(project(":kafka-core:common"))
 
     implementation("com.google.code.gson:gson")
 

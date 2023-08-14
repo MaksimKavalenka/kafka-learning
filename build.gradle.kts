@@ -23,7 +23,10 @@ subprojects {
             dependency("com.launchdarkly:okhttp-eventsource:4.1.1")
             dependency("com.squareup.okhttp3:okhttp:4.11.0")
 
-            dependency("org.apache.kafka:kafka-clients:3.5.1")
+            dependencySet("org.apache.kafka:3.5.1") {
+                entry("kafka-clients")
+                entry("kafka-streams")
+            }
 
             dependency("org.opensearch.client:opensearch-rest-high-level-client:2.9.0")
 
