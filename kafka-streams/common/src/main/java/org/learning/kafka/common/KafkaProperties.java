@@ -10,7 +10,9 @@ import java.util.Properties;
 
 public enum KafkaProperties {
 
-    WORD_COUNT_STREAM("word-count-stream");
+    WORD_COUNT_STREAM("word-count-stream"),
+
+    FAVORITE_COLOR_STREAM("favorite-color-stream");
 
     private final Properties properties;
 

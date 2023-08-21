@@ -20,15 +20,14 @@ public class WordCount {
 
     public static void main(String[] args) {
         StreamsBuilder builder = new StreamsBuilder();
-        createWordCountStream(builder);
-        Topology topology = builder.build();
+        Topology topology = createWordCountTopology(builder);
 
         KafkaStreams streams = new KafkaStreams(topology, KafkaProperties.WORD_COUNT_STREAM.getProperties());
         streams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 
-    private static void createWordCountStream(StreamsBuilder builder) {
+    private static Topology createWordCountTopology(StreamsBuilder builder) {
         KStream<String, String> stream = builder.stream(INPUT_TOPIC_NAME);
 
         KTable<String, Long> wordCount = stream
@@ -39,6 +38,8 @@ public class WordCount {
                 .count(Named.as("counts"));
 
         wordCount.toStream().to(OUTPUT_TOPIC_NAME, Produced.with(Serdes.String(), Serdes.Long()));
+
+        return builder.build();
     }
 
 }
