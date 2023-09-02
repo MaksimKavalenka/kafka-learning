@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":kafka-core:common"))
+    implementation(project(":kafka-common"))
 
     implementation("org.apache.kafka:kafka-clients")
 

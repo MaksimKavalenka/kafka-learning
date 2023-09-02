@@ -9,7 +9,7 @@ import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Named;
 import org.apache.kafka.streams.kstream.Produced;
-import org.learning.kafka.common.KafkaProperties;
+import org.learning.kafka.common.KafkaStreamsProperties;
 
 public class FavoriteColor {
 
@@ -23,7 +23,7 @@ public class FavoriteColor {
         StreamsBuilder builder = new StreamsBuilder();
         Topology topology = createFavoriteColorTopology(builder);
 
-        KafkaStreams streams = new KafkaStreams(topology, KafkaProperties.FAVORITE_COLOR_STREAM.getProperties());
+        KafkaStreams streams = new KafkaStreams(topology, KafkaStreamsProperties.FAVORITE_COLOR_STREAM.getProperties());
         streams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }

@@ -8,15 +8,17 @@ import org.apache.kafka.streams.StreamsConfig;
 import java.util.Map;
 import java.util.Properties;
 
-public enum KafkaProperties {
+public enum KafkaStreamsProperties {
 
-    WORD_COUNT_STREAM("word-count-stream"),
+    BANK_BALANCE("bank-balance-stream"),
 
-    FAVORITE_COLOR_STREAM("favorite-color-stream");
+    FAVORITE_COLOR_STREAM("favorite-color-stream"),
+
+    WORD_COUNT_STREAM("word-count-stream");
 
     private final Properties properties;
 
-    KafkaProperties(String applicationId) {
+    KafkaStreamsProperties(String applicationId) {
         properties = new Properties();
 
         properties.setProperty(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");

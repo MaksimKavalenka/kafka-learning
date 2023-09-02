@@ -1,5 +1,5 @@
 dependencies {
-    implementation(project(":kafka-core:common"))
+    implementation(project(":kafka-common"))
 
     implementation("com.launchdarkly:okhttp-eventsource")
     implementation("com.squareup.okhttp3:okhttp")
